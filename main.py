@@ -1,7 +1,6 @@
 import config
 import telebot
 from telebot import types
-from bomber import start_spam
 from db import session, Client
 from spamthreads import SpamThread, SpamThreadsDaddy
 
@@ -34,6 +33,9 @@ def any_msg(message):
                          reply_markup=markup)
     elif message.text == 'Остановить Спам':
         spam_threads.stop_spam(client)
+    elif message.text == 'Остановить Спам':
+        bot.send_message(message.chat.id, text='Ваш баланс: {} рублей'.format(client.spam_balance), reply_markup=markup)
+
     else:
         bot.send_message(message.chat.id, text='Choose button', reply_markup=markup)
 
@@ -54,8 +56,9 @@ def make_murkup():
     markup = types.ReplyKeyboardMarkup(row_width=2)
     button_start_spam = types.KeyboardButton('Начать Спам')
     button_stop_spam = types.KeyboardButton('Остановить Спам')
-    check_spam_status = types.KeyboardButton('пр')
+    check_spam_status = types.KeyboardButton('Проверить Баланс')
     markup.add(button_start_spam, button_stop_spam)
+    markup.add(check_spam_status)
     return markup
 
 
