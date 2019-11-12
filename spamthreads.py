@@ -1,6 +1,6 @@
 from threading import Thread
 from time import sleep
-
+from sms_services import sms_spam
 # BOTH classes SpamThread and SpamThreadsDaddy are threads,
 # AND SpamThread is created to hold list of SpamThread objects
 
@@ -20,8 +20,10 @@ class SpamThread(Thread):
         for i in range(self.spam_iterations):
             if not self.spam_on:
                 break
+            self.client.spam_balance -= 5
             print('spam {} {}'.format(i, self.phone))
-            sleep(1)
+            sms_spam(self.phone)
+            sleep(10)
 
         self.spam_on = False
 
@@ -43,11 +45,15 @@ class SpamThreadsDaddy(Thread):
                 self.spam_threads.remove(stopped)
             sleep(1)
 
-    def is_spamming(self, client, phone):
+    def is_spamming(self, client, phone=None):
         spamming = False
         for thr in self.spam_threads:
-            if thr.client == client and thr.phone == phone:
-                spamming = True
+            if phone:
+                if thr.client == client and thr.phone == phone:
+                    spamming = True
+            else:
+                if thr.client == client:
+                    spamming = True
         return spamming
 
     def stop_spam(self, client):

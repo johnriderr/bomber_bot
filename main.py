@@ -24,16 +24,21 @@ def any_msg(message):
                     new_spam_thread.start()
                     spam_threads.add_thread(new_spam_thread)
                 else:
-                    bot.send_message(message.chat.id,                                     'Спам уже идет',                                     reply_markup=markup)
+                    bot.send_message(message.chat.id, 'Спам уже идет', reply_markup=markup)
             else:
                 bot.send_message(message.chat.id, 'Пополните ваш баланс', reply_markup=markup)
 
     elif message.text == 'Начать Спам':
-        bot.send_message(message.chat.id, '''Введите номер без + в формате:\n🇺🇦 380xxxxxxxxx\n🇷🇺 79xxxxxxxxx''',
+        bot.send_message(message.chat.id, '''Введите номер без + в формате:\n🇺🇦 380xxxxxxxxx\n🇷🇺 79xxxxxxxxxx''',
                          reply_markup=markup)
     elif message.text == 'Остановить Спам':
-        spam_threads.stop_spam(client)
-    elif message.text == 'Остановить Спам':
+        if not spam_threads.is_spamming(client):
+            bot.send_message(message.chat.id, text='От вас нет спама', reply_markup=markup)
+        else:
+            spam_threads.stop_spam(client)
+            bot.send_message(message.chat.id, text='Спам остановлен', reply_markup=markup)
+
+    elif message.text == 'Проверить Баланс':
         bot.send_message(message.chat.id, text='Ваш баланс: {} рублей'.format(client.spam_balance), reply_markup=markup)
 
     else:
