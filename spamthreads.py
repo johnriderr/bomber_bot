@@ -6,12 +6,13 @@ from sms_services import sms_spam
 
 
 class SpamThread(Thread):
-    def __init__(self, phone, client, spam_iterations=1):
+    def __init__(self, phone, client, session, spam_iterations=25):
         Thread.__init__(self)
         self.phone = phone
         self.spam_iterations = spam_iterations
         self.client = client
         self.spam_on = True
+        self.session = session
 
     def run(self):
         self.spam_on = True
@@ -22,8 +23,8 @@ class SpamThread(Thread):
                 break
             self.client.spam_balance -= 5
             print('spam {} {}'.format(i, self.phone))
-            sms_spam(self.phone)
-            sleep(10)
+            sms_spam(self.phone, self.client, self.session)
+            sleep(5)
 
         self.spam_on = False
 
