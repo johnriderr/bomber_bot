@@ -89,7 +89,7 @@ def create_client_in_db_if_not_exist(tg_id):
     client = session.query(Client).filter_by(tg_id=tg_id).first()
     new_client = None
     if not client:
-        new_client = Client(spam_balance=25, tg_id=tg_id, payment_comment=0)
+        new_client = Client(spam_balance=15, tg_id=tg_id, payment_comment=0)
         session.add(new_client)
         session.commit()
     return client if client else new_client
