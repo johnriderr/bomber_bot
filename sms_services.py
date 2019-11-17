@@ -137,4 +137,6 @@ def sms_spam(phone, client, session):
         client.decrease_money(price, session)
     except ReqConnectionError:
         print('ReqConnectionError')
+    except:
+        print('other exception')
 
