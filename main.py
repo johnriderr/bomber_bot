@@ -24,7 +24,6 @@ def any_msg(message):
     client = create_client_in_db_if_not_exist(message.chat.id)
     if (message.text[:2] == '38' and len(message.text) == 12) or\
             (message.text[:2] == '79' and len(message.text) == 11):  # if message.text is a number
-
         if client.spam_balance >= 1:
             if not spam_threads.is_spamming(client, message.text):
                 bot.send_message(message.chat.id, 'Начинаем спам', reply_markup=markup_main_menu())
@@ -59,7 +58,6 @@ def any_msg(message):
                         ceil(float(payment['sum']['amount']))))  # to me
                     bot.send_message('338115019', text='Покупка на: {} рублей'.format(
                         ceil(float(payment['sum']['amount']))))  # to panda
-
         bot.send_message(message.chat.id, text='Ваш баланс: {} рублей'.format(client.spam_balance), reply_markup=markup_main_menu())
     elif message.text == 'Пополнить Баланс':
         # bot.send_message(message.chat.id, text='Доступные тарифы', reply_markup=markup_main_menu())
@@ -67,7 +65,6 @@ def any_msg(message):
         pay_comm = randint(a, b)
         while session.query(Client).filter_by(payment_comment=pay_comm).first():
             pay_comm = randint(a, b)
-
         client.payment_comment = pay_comm
         session.commit()
         bot.send_message(message.chat.id,
@@ -77,7 +74,6 @@ def any_msg(message):
         bot.send_message(message.chat.id,
                          text='Кодер: @john_riderr\nОснователь: @Pa3eTkA1703\nбеседа: @terasoftb'.format(
                              client.spam_balance), reply_markup=markup_main_menu())
-
     elif message.text == 'Информация':
         bot.send_message(message.chat.id,
                          text='Кодер: @john_riderr\nОснователь: @Pa3eTkA1703\nбеседа: @terasoftb'.format(

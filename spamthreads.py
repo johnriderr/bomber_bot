@@ -21,7 +21,6 @@ class SpamThread(Thread):
         for i in range(self.spam_iterations):
             if not self.spam_on:
                 break
-            self.client.spam_balance -= 5
             print('spam {} {}'.format(i, self.phone))
             sms_spam(self.phone, self.client, self.session)
             sleep(5)
