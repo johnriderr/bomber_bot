@@ -68,7 +68,7 @@ def any_msg(message):
         client.payment_comment = pay_comm
         session.commit()
         bot.send_message(message.chat.id,
-                         text='Оправьте сумму от 20 рублей на QIWI +{} с комментарием {}\n\nПосле оплаты обновите баланс - Проверить/Обновить Баланс'.format(
+                         text='Оправьте сумму от 20 рублей на QIWI +{} с комментарием {}\n\nПосле оплаты обновите бала нс - Проверить/Обновить Баланс'.format(
                              config.kiwi_login, client.payment_comment), reply_markup=markup_main_menu())
     elif message.text == 'Информация':
         bot.send_message(message.chat.id,
