@@ -9,6 +9,7 @@ import json
 from datetime import timedelta
 from datetime import datetime
 from math import ceil
+import daemon
 
 bot = telebot.TeleBot(config.token)
 
@@ -117,4 +118,9 @@ def payment_history_last(my_login, api_access_token, rows_num, next_TxnId, next_
 
 
 if __name__ == '__main__':
-    bot.polling(none_stop=True)
+    daemon_mode = False
+    if daemon_mode:
+        with daemon.DaemonContext():
+            bot.polling(none_stop=True)
+    else:
+        bot.polling(none_stop=True)
